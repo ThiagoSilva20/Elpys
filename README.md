@@ -1,34 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevVoluntário
 
-## Getting Started
+Uma plataforma colaborativa para conectar desenvolvedores iniciantes que buscam experiência com projetos voluntários publicados por anunciantes.
 
-First, run the development server:
+## 💡 Sobre a Ideia
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O DevVoluntário nasce com o propósito de ajudar quem está começando na carreira de desenvolvimento a adquirir experiência prática. Ao mesmo tempo, oferece uma solução para projetos sociais, iniciativas pessoais e startups que precisam de apoio técnico, mas não têm orçamento.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Como vai funcionar:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 📝 Anunciantes publicam vagas/projetos de colaboração voluntária.
+- 💻 Desenvolvedores se candidatam para ganhar experiência prática.
+- 🤝 A plataforma conecta ambos, incentivando o crescimento da comunidade tech.
 
-## Learn More
+## 🚧 Status do Projeto
 
-To learn more about Next.js, take a look at the following resources:
+Este projeto está em fase inicial de planejamento. Nenhuma funcionalidade foi desenvolvida até o momento.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Este repositório servirá como um diário de desenvolvimento e documentação de toda a jornada.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠 Tecnologias Planejadas
 
-## Deploy on Vercel
+- Framework: [Next.js](https://nextjs.org/)
+- Linguagem: TypeScript
+- Estilização: Tailwind CSS
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Outras ferramentas poderão ser adicionadas ao longo do processo de desenvolvimento.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📚 Objetivos do Repositório
+
+Este repositório servirá para:
+
+- Documentar cada passo do desenvolvimento;
+- Registrar decisões técnicas e de design;
+- Compartilhar aprendizados;
+- Criar um espaço colaborativo para ideias e melhorias;
+- Atrair contribuições da comunidade.
+
+---
+
+📌 Fique à vontade para acompanhar o progresso ou sugerir ideias.
+Toda colaboração será bem-vinda! 🚀
