@@ -33,10 +33,10 @@ const Header = () => {
         <div className="flex items-center gap-4">
           <ToggleTheme />
           <Button variant="outline" asChild>
-            <Link href="/login">Entrar</Link>
+            <Link href="/">Entrar</Link>
           </Button>
           <Button>
-            <Link href="#cadastro">Cadastrar</Link>
+            <Link href="/">Cadastrar</Link>
           </Button>
         </div>
       </div>
