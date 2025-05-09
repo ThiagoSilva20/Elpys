@@ -3,7 +3,7 @@ import { Card } from "../ui/card";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { GridPattern } from "@/components/magicui/grid-pattern";
 import { cn } from "@/app/_lib/utils";
-
+//oi
 const BenefitsSection = () => {
   return (
     <section
