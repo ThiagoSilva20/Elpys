@@ -47,7 +47,7 @@ const CtaAdvertiseSection = () => {
               combinam com seus interesses e disponibilidade.
             </p>
             <Button className="h-16 w-full lg:w-[23em]" asChild>
-              <Link href="/cadastro/voluntario" className="w-full">
+              <Link href="/" className="w-full">
                 Cadastrar como Voluntário <ArrowRightIcon />
               </Link>
             </Button>
@@ -66,7 +66,7 @@ const CtaAdvertiseSection = () => {
               voluntários comprometidos com sua causa.
             </p>
             <Button className="h-16 w-full lg:w-[23em]" asChild>
-              <Link href="/cadastro/organizacao" className="w-full">
+              <Link href="/" className="w-full">
                 Cadastrar como Organização <ArrowRightIcon />
               </Link>
             </Button>
