@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { TypingAnimation } from "@/components/magicui/typing-animation";
-import { GridPattern } from "@/components/magicui/grid-pattern";
+import { TypingAnimation } from "@/app/_components/magicui/typing-animation";
+import { GridPattern } from "@/app/_components/magicui/grid-pattern";
 import { cn } from "@/app/_lib/utils";
 
 const HeroSection = () => {

@@ -1,5 +1,5 @@
 import { cn } from "@/app/_lib/utils";
-import { Marquee } from "@/components/magicui/marquee";
+import { Marquee } from "@/app/_components/magicui/marquee";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const reviews = [

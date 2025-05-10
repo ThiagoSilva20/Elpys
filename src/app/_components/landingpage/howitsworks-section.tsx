@@ -1,7 +1,7 @@
 import { Building, Search, Users } from "lucide-react";
 import { Card } from "../ui/card";
-import { TextAnimate } from "@/components/magicui/text-animate";
-import { BorderBeam } from "@/components/magicui/border-beam";
+import { TextAnimate } from "@/app/_components/magicui/text-animate";
+import { BorderBeam } from "@/app/_components/magicui/border-beam";
 
 const HowItsWorksSection = () => {
   return (

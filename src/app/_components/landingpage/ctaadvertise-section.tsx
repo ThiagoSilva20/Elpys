@@ -2,8 +2,8 @@ import { ArrowRightIcon, Building, Users } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { Card } from "../ui/card";
-import { BorderBeam } from "@/components/magicui/border-beam";
-import { GridPattern } from "@/components/magicui/grid-pattern";
+import { BorderBeam } from "@/app/_components/magicui/border-beam";
+import { GridPattern } from "@/app/_components/magicui/grid-pattern";
 import { cn } from "@/app/_lib/utils";
 
 const CtaAdvertiseSection = () => {
