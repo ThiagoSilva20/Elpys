@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { TypingAnimation } from "@/app/_components/magicui/typing-animation";
 import { GridPattern } from "@/app/_components/magicui/grid-pattern";
 import { cn } from "@/app/_lib/utils";
+import { Building, Users2Icon } from "lucide-react";
 
 const HeroSection = () => {
   return (
@@ -27,10 +28,14 @@ const HeroSection = () => {
       </div>
       <div className="mt-4 flex flex-col gap-4 sm:flex-row">
         <Button asChild className="h-12 w-[23em]">
-          <Link href="#cadastro-voluntario">Quero ser voluntário</Link>
+          <Link href="#cadastro-voluntario">
+            Quero ser voluntário <Users2Icon className="size-4" />
+          </Link>
         </Button>
         <Button variant="outline" asChild className="h-12 w-[23em]">
-          <Link href="#cadastro-anunciante">Quero anunciar vagas</Link>
+          <Link href="#cadastro-anunciante">
+            Quero anunciar vagas <Building className="size-4" />
+          </Link>
         </Button>
       </div>
     </section>

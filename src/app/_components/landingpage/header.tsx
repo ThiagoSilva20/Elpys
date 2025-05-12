@@ -1,4 +1,4 @@
-import { HeartHandshakeIcon } from "lucide-react";
+import { HeartHandshakeIcon, LogInIcon, User } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import ToggleTheme from "@/app/themes/toggle-theme";
@@ -33,10 +33,14 @@ const Header = () => {
         <div className="flex items-center gap-4">
           <ToggleTheme />
           <Button variant="outline" asChild>
-            <Link href="/">Entrar</Link>
+            <Link href="/" className="flex items-center">
+              Entrar <User className="size-4" />
+            </Link>
           </Button>
           <Button>
-            <Link href="/">Cadastrar</Link>
+            <Link href="/" className="flex items-center">
+              Cadastrar <LogInIcon className="ml-2 size-4" />
+            </Link>
           </Button>
         </div>
       </div>
