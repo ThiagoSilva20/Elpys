@@ -31,19 +31,19 @@ import { Checkbox } from "@/app/_components/ui/checkbox";
 export default function CadastroOrganizacaoPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    nomeOrganizacao: "",
+    name: "",
     cnpj: "",
     email: "",
-    senha: "",
+    password: "",
     confirmarSenha: "",
-    telefone: "",
-    site: "",
-    endereco: "",
-    cidade: "",
-    estado: "",
-    cep: "",
-    descricao: "",
-    tipoOrganizacao: "",
+    phone: "",
+    website: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    description: "",
+    orgType: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -71,7 +71,7 @@ export default function CadastroOrganizacaoPage() {
       return;
     }
 
-    if (formData.senha !== formData.confirmarSenha) {
+    if (formData.password !== formData.confirmarSenha) {
       setError("As senhas não coincidem.");
       return;
     }
@@ -79,11 +79,44 @@ export default function CadastroOrganizacaoPage() {
     setIsLoading(true);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Chamada real para a API de cadastro
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userType: "organization",
+          email: formData.email,
+          password: formData.password,
+          name: formData.name,
+          cnpj: formData.cnpj,
+          orgType: formData.orgType,
+          phone: formData.phone,
+          website: formData.website,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          zipCode: formData.zipCode,
+          description: formData.description,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Falha ao realizar cadastro");
+      }
+
+      // Cadastro bem-sucedido
       router.push("/cadastro/sucesso");
     } catch (err) {
-      setError("Falha ao realizar cadastro. Tente novamente.");
-      console.log(err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Falha ao realizar cadastro. Tente novamente.",
+      );
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -123,14 +156,14 @@ export default function CadastroOrganizacaoPage() {
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="nomeOrganizacao">Nome da organização</Label>
+                <Label htmlFor="name">Nome da organização</Label>
                 <Input
-                  id="nomeOrganizacao"
-                  name="nomeOrganizacao"
-                  value={formData.nomeOrganizacao}
+                  id="name"
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
                   required
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
@@ -142,18 +175,18 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.cnpj}
                   onChange={handleChange}
                   required
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="tipoOrganizacao">Tipo de organização</Label>
+                <Label htmlFor="orgType">Tipo de organização</Label>
                 <Select
                   onValueChange={(value) =>
-                    handleSelectChange("tipoOrganizacao", value)
+                    handleSelectChange("orgType", value)
                   }
                 >
-                  <SelectTrigger className="border-[#1c4020] text-white focus:ring-2 focus:ring-[#25352a]">
+                  <SelectTrigger className="border-[#1c4020]">
                     <SelectValue placeholder="Selecione o tipo" />
                   </SelectTrigger>
                   <SelectContent>
@@ -176,20 +209,20 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="senha">Senha</Label>
+                <Label htmlFor="password">Senha</Label>
                 <Input
-                  id="senha"
-                  name="senha"
+                  id="password"
+                  name="password"
                   type="password"
-                  value={formData.senha}
+                  value={formData.password}
                   onChange={handleChange}
                   required
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
@@ -202,63 +235,63 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.confirmarSenha}
                   onChange={handleChange}
                   required
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="telefone">Telefone</Label>
+                <Label htmlFor="phone">Telefone</Label>
                 <Input
-                  id="telefone"
-                  name="telefone"
-                  value={formData.telefone}
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="site">Site (opcional)</Label>
+                <Label htmlFor="website">Site (opcional)</Label>
                 <Input
-                  id="site"
-                  name="site"
-                  value={formData.site}
+                  id="website"
+                  name="website"
+                  value={formData.website}
                   onChange={handleChange}
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="endereco">Endereço</Label>
+                <Label htmlFor="address">Endereço</Label>
                 <Input
-                  id="endereco"
-                  name="endereco"
-                  value={formData.endereco}
+                  id="address"
+                  name="address"
+                  value={formData.address}
                   onChange={handleChange}
                   required
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="cidade">Cidade</Label>
+                <Label htmlFor="city">Cidade</Label>
                 <Input
-                  id="cidade"
-                  name="cidade"
-                  value={formData.cidade}
+                  id="city"
+                  name="city"
+                  value={formData.city}
                   onChange={handleChange}
                   required
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-white focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="estado">Estado</Label>
+                <Label htmlFor="state">Estado</Label>
                 <Select
-                  onValueChange={(value) => handleSelectChange("estado", value)}
+                  onValueChange={(value) => handleSelectChange("state", value)}
                 >
-                  <SelectTrigger className="border-[#1c4020] text-white focus:ring-2 focus:ring-[#25352a]">
+                  <SelectTrigger className="border-[#1c4020]">
                     <SelectValue placeholder="Selecione o estado" />
                   </SelectTrigger>
                   <SelectContent>
@@ -294,26 +327,26 @@ export default function CadastroOrganizacaoPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="cep">CEP</Label>
+                <Label htmlFor="zipCode">CEP</Label>
                 <Input
-                  id="cep"
-                  name="cep"
-                  value={formData.cep}
+                  id="zipCode"
+                  name="zipCode"
+                  value={formData.zipCode}
                   onChange={handleChange}
                   required
-                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="descricao">Descrição da organização</Label>
+                <Label htmlFor="description">Descrição da organização</Label>
                 <Textarea
-                  id="descricao"
-                  name="descricao"
+                  id="description"
+                  name="description"
                   placeholder="Descreva a missão, valores e áreas de atuação da sua organização"
-                  value={formData.descricao}
+                  value={formData.description}
                   onChange={handleChange}
-                  className="min-h-[100px] border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
+                  className="min-h-[100px] border-[#1c4020]"
                   required
                 />
               </div>
@@ -323,7 +356,7 @@ export default function CadastroOrganizacaoPage() {
                   id="termos"
                   checked={termos}
                   onCheckedChange={(checked) => setTermos(checked as boolean)}
-                  className="border-[#1c4020] text-white focus:ring-2 focus:ring-[#25352a]"
+                  className="border-[#1c4020]"
                 />
                 <label
                   htmlFor="termos"

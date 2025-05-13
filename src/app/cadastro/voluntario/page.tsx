@@ -31,15 +31,15 @@ import { Checkbox } from "@/app/_components/ui/checkbox";
 export default function CadastroVoluntarioPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    nome: "",
+    fullName: "",
     email: "",
-    senha: "",
+    password: "",
     confirmarSenha: "",
-    telefone: "",
-    cidade: "",
-    estado: "",
-    areasInteresse: "",
-    disponibilidade: "",
+    phone: "",
+    city: "",
+    state: "",
+    interests: "",
+    availability: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -67,21 +67,48 @@ export default function CadastroVoluntarioPage() {
       return;
     }
 
-    if (formData.senha !== formData.confirmarSenha) {
+    if (formData.password !== formData.confirmarSenha) {
       setError("As senhas não coincidem.");
       return;
     }
 
     setIsLoading(true);
 
-    // Simulação de cadastro - substituir por integração real
     try {
-      // Aqui você implementaria a lógica real de cadastro
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Chamada real para a API de cadastro
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userType: "volunteer",
+          email: formData.email,
+          password: formData.password,
+          fullName: formData.fullName,
+          phone: formData.phone,
+          city: formData.city,
+          state: formData.state,
+          interests: formData.interests,
+          availability: formData.availability,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Falha ao realizar cadastro");
+      }
+
+      // Cadastro bem-sucedido
       router.push("/cadastro/sucesso");
     } catch (err) {
-      setError("Falha ao realizar cadastro. Tente novamente.");
-      console.log(err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Falha ao realizar cadastro. Tente novamente.",
+      );
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -121,11 +148,11 @@ export default function CadastroVoluntarioPage() {
 
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="nome">Nome completo</Label>
+                <Label htmlFor="fullName">Nome completo</Label>
                 <Input
-                  id="nome"
-                  name="nome"
-                  value={formData.nome}
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
                   onChange={handleChange}
                   required
                   className="border-[#1c4020]"
@@ -146,12 +173,12 @@ export default function CadastroVoluntarioPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="senha">Senha</Label>
+                <Label htmlFor="password">Senha</Label>
                 <Input
-                  id="senha"
-                  name="senha"
+                  id="password"
+                  name="password"
                   type="password"
-                  value={formData.senha}
+                  value={formData.password}
                   onChange={handleChange}
                   required
                   className="border-[#1c4020]"
@@ -172,12 +199,11 @@ export default function CadastroVoluntarioPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmarSenha">Confirmar senha</Label>
+                <Label htmlFor="phone">Telefone</Label>
                 <Input
-                  id="confirmarSenha"
-                  name="confirmarSenha"
-                  type="password"
-                  value={formData.confirmarSenha}
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
                   onChange={handleChange}
                   required
                   className="border-[#1c4020]"
@@ -185,11 +211,11 @@ export default function CadastroVoluntarioPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="telefone">Telefone</Label>
+                <Label htmlFor="city">Cidade</Label>
                 <Input
-                  id="telefone"
-                  name="telefone"
-                  value={formData.telefone}
+                  id="city"
+                  name="city"
+                  value={formData.city}
                   onChange={handleChange}
                   required
                   className="border-[#1c4020]"
@@ -197,21 +223,9 @@ export default function CadastroVoluntarioPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="cidade">Cidade</Label>
-                <Input
-                  id="cidade"
-                  name="cidade"
-                  value={formData.cidade}
-                  onChange={handleChange}
-                  required
-                  className="border-[#1c4020]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="estado">Estado</Label>
+                <Label htmlFor="state">Estado</Label>
                 <Select
-                  onValueChange={(value) => handleSelectChange("estado", value)}
+                  onValueChange={(value) => handleSelectChange("state", value)}
                 >
                   <SelectTrigger className="border-[#1c4020]">
                     <SelectValue placeholder="Selecione seu estado" />
@@ -249,10 +263,10 @@ export default function CadastroVoluntarioPage() {
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="disponibilidade">Disponibilidade</Label>
+                <Label htmlFor="availability">Disponibilidade</Label>
                 <Select
                   onValueChange={(value) =>
-                    handleSelectChange("disponibilidade", value)
+                    handleSelectChange("availability", value)
                   }
                 >
                   <SelectTrigger className="border-[#1c4020]">
@@ -272,12 +286,12 @@ export default function CadastroVoluntarioPage() {
               </div>
 
               <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="areasInteresse">Áreas de interesse</Label>
+                <Label htmlFor="interests">Áreas de interesse</Label>
                 <Textarea
-                  id="areasInteresse"
-                  name="areasInteresse"
+                  id="interests"
+                  name="interests"
                   placeholder="Descreva suas áreas de interesse para voluntariado (educação, meio ambiente, saúde, etc.)"
-                  value={formData.areasInteresse}
+                  value={formData.interests}
                   onChange={handleChange}
                   className="min-h-[100px] border-[#1c4020]"
                   required

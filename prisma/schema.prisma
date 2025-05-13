@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // Ou outro provedor de sua escolha
+  url      = env("DATABASE_URL")
+}
+
+// Modelo base para autenticação
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  userType      String    // "organization" ou "volunteer"
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  // Relacionamentos
+  organization  Organization?
+  volunteer     Volunteer?
+  // Para NextAuth (removendo para simplificar, conforme solicitado)
+  // accounts      Account[]
+  // sessions      Session[]
+}
+
+// Modelo para organização
+model Organization {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  name            String
+  cnpj            String   @unique
+  orgType         String
+  phone           String?
+  website         String?
+  address         String?
+  city            String
+  state           String
+  zipCode         String?
+  description     String?  
+  // Relacionamento com usuário base
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Relacionamento com vagas (removendo para simplificar, conforme solicitado)
+  // jobs            Job[]
+}
+
+// Modelo para voluntário
+model Volunteer {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  fullName        String
+  phone           String?
+  city            String?
+  state           String?
+  availability    String?
+  interests       String?  
+  // Relacionamento com usuário base
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Relacionamento com candidaturas (removendo para simplificar, conforme solicitado)
+  // applications    Application[]
+}
+
+// Modelos removidos para simplificar, conforme solicitado
+// model Job {
+//   id              String   @id @default(cuid())
+//   title           String
+//   description     String   @db.Text
+//   requirements    String?  @db.Text
+//   location        String?
+//   remote          Boolean  @default(false)
+//   organizationId  String
+//   createdAt       DateTime @default(now())
+//   updatedAt       DateTime @updatedAt
+//   // Relacionamentos
+//   organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+//   applications    Application[]
+// }
+
+// model Application {
+//   id            String   @id @default(cuid())
+//   jobId         String
+//   volunteerId   String
+//   status        String   @default("pending") // "pending", "accepted", "rejected"
+//   message       String?  @db.Text
+//   createdAt     DateTime @default(now())
+//   updatedAt     DateTime @updatedAt
+//   // Relacionamentos
+//   job           Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+//   volunteer     Volunteer @relation(fields: [volunteerId], references: [id], onDelete: Cascade)
+// }
+
+// model Account {
+//   id                 String  @id @default(cuid())
+//   userId             String
+//   type               String
+//   provider           String
+//   providerAccountId  String
+//   refresh_token      String?  @db.Text
+//   access_token       String?  @db.Text
+//   expires_at         Int?
+//   token_type         String?
+//   scope              String?
+//   id_token           String?  @db.Text
+//   session_state      String?
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   @@unique([provider, providerAccountId])
+// }
+
+// model Session {
+//   id           String   @id @default(cuid())
+//   sessionToken String   @unique
+//   userId       String
+//   expires      DateTime
+//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// }
+
+// model VerificationToken {
+//   identifier String
+//   token      String   @unique
+//   expires    DateTime
+//   @@unique([identifier, token])
+// }
