@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { HeartHandshakeIcon } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import {
   Card,
@@ -12,69 +12,70 @@ import {
 } from "@/app/_components/ui/card";
 import { FaUserGraduate } from "react-icons/fa";
 import { IoIosBusiness } from "react-icons/io";
+import { BorderBeam } from "../_components/magicui/border-beam";
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f7f5] p-4">
-      <Link href="/" className="absolute top-8 left-8 flex items-center gap-2">
-        <Heart className="h-6 w-6 text-[#25352a]" />
-        <span className="text-xl font-bold text-[#25352a]">Elpys</span>
+    <div className="bg-background flex min-h-screen flex-col items-center justify-center p-4">
+      <Link href="/" className="flex items-center gap-2">
+        <div className="from-primary to-secondary flex size-10 items-center justify-center rounded-lg bg-gradient-to-b p-2">
+          <HeartHandshakeIcon className="size-6 text-white" />
+        </div>
+        <span className="text-xl font-bold">Elpys</span>
       </Link>
 
       <div className="w-full max-w-4xl">
-        <h1 className="mb-8 text-center text-3xl font-bold text-[#25352a]">
+        <h1 className="mb-8 text-center text-3xl font-bold">
           Escolha como deseja entrar
         </h1>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <Card className="overflow-hidden shadow-lg">
+          <Card className="bg-background border-primary/50 relative overflow-hidden shadow-lg">
             <div className="relative flex h-48 items-center justify-center">
-              <FaUserGraduate className="h-40 w-40 text-[#25352a]" />
+              <FaUserGraduate className="text-primary h-40 w-40" />
             </div>
             <CardHeader>
-              <CardTitle className="text-xl font-bold text-[#25352a]">
+              <CardTitle className="text-xl font-bold">
                 Sou Voluntário
               </CardTitle>
-              <CardDescription className="text-gray-700">
+              <CardDescription className="text-muted-foreground">
                 Acesse sua conta para encontrar oportunidades de voluntariado
                 que combinam com seus interesses e disponibilidade.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Link href="/login/voluntario">
-                <Button className="w-full bg-[#25352a] hover:bg-[#1a261e]">
-                  Entrar como Voluntário
-                </Button>
-              </Link>
+              <Button className="h-[3em] w-full" asChild>
+                <Link href="/login/voluntario">Entrar como Voluntário</Link>
+              </Button>
             </CardContent>
+            <BorderBeam size={80} duration={8} />
           </Card>
 
-          <Card className="overflow-hidden shadow-lg">
+          <Card className="bg-background border-primary/50 relative overflow-hidden shadow-lg">
             <div className="relative flex h-48 items-center justify-center">
-              <IoIosBusiness className="h-40 w-40 text-[#25352a]" />
+              <IoIosBusiness className="text-primary h-40 w-40" />
             </div>
             <CardHeader>
-              <CardTitle className="text-xl font-bold text-[#25352a]">
+              <CardTitle className="text-xl font-bold">
                 Sou Organização
               </CardTitle>
-              <CardDescription className="text-gray-700">
+              <CardDescription className="text-muted-foreground">
                 Acesse sua conta para gerenciar vagas e encontrar voluntários
                 para sua organização.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Link href="/login/organizacao">
-                <Button className="w-full bg-[#25352a] hover:bg-[#1a261e]">
-                  Entrar como Organização
-                </Button>
-              </Link>
+              <Button className="h-[3em] w-full" asChild>
+                <Link href="/login/organizacao">Entrar como Organização</Link>
+              </Button>
             </CardContent>
+            <BorderBeam size={80} duration={8} />
           </Card>
         </div>
 
         <div className="mt-8 text-center">
           Não tem uma conta?{" "}
-          <Link href="/cadastro" className="text-[#25352a] hover:underline">
+          <Link href="/cadastro" className="text-secondary hover:underline">
             Cadastre-se
           </Link>
         </div>
