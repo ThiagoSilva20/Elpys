@@ -12,7 +12,7 @@ import {
 
 export default function CadastroSucessoPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f7f5] p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <Link href="/" className="absolute top-8 left-8 flex items-center gap-2">
         <Heart className="h-6 w-6 text-[#25352a]" />
         <span className="text-xl font-bold text-[#25352a]">Elpys</span>

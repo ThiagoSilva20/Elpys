@@ -88,7 +88,7 @@ export default function CadastroVoluntarioPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f7f5] p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <Link href="/" className="absolute top-8 left-8 flex items-center gap-2">
         <Heart className="h-6 w-6 text-[#25352a]" />
         <span className="text-xl font-bold text-[#25352a]">Elpys</span>
@@ -128,6 +128,7 @@ export default function CadastroVoluntarioPage() {
                   value={formData.nome}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020]"
                 />
               </div>
 
@@ -140,6 +141,7 @@ export default function CadastroVoluntarioPage() {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020]"
                 />
               </div>
 
@@ -152,6 +154,7 @@ export default function CadastroVoluntarioPage() {
                   value={formData.senha}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020]"
                 />
               </div>
 
@@ -164,6 +167,20 @@ export default function CadastroVoluntarioPage() {
                   value={formData.confirmarSenha}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020]"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="confirmarSenha">Confirmar senha</Label>
+                <Input
+                  id="confirmarSenha"
+                  name="confirmarSenha"
+                  type="password"
+                  value={formData.confirmarSenha}
+                  onChange={handleChange}
+                  required
+                  className="border-[#1c4020]"
                 />
               </div>
 
@@ -175,6 +192,7 @@ export default function CadastroVoluntarioPage() {
                   value={formData.telefone}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020]"
                 />
               </div>
 
@@ -186,6 +204,7 @@ export default function CadastroVoluntarioPage() {
                   value={formData.cidade}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020]"
                 />
               </div>
 
@@ -194,7 +213,7 @@ export default function CadastroVoluntarioPage() {
                 <Select
                   onValueChange={(value) => handleSelectChange("estado", value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-[#1c4020]">
                     <SelectValue placeholder="Selecione seu estado" />
                   </SelectTrigger>
                   <SelectContent>
@@ -236,7 +255,7 @@ export default function CadastroVoluntarioPage() {
                     handleSelectChange("disponibilidade", value)
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-[#1c4020]">
                     <SelectValue placeholder="Selecione sua disponibilidade" />
                   </SelectTrigger>
                   <SelectContent>
@@ -247,6 +266,7 @@ export default function CadastroVoluntarioPage() {
                     <SelectItem value="noites">Noites</SelectItem>
                     <SelectItem value="flexivel">Flexível</SelectItem>
                     <SelectItem value="remoto">Apenas remoto</SelectItem>
+                    <SelectItem value="todos">Todos</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -259,7 +279,7 @@ export default function CadastroVoluntarioPage() {
                   placeholder="Descreva suas áreas de interesse para voluntariado (educação, meio ambiente, saúde, etc.)"
                   value={formData.areasInteresse}
                   onChange={handleChange}
-                  className="min-h-[100px]"
+                  className="min-h-[100px] border-[#1c4020]"
                   required
                 />
               </div>
@@ -269,6 +289,7 @@ export default function CadastroVoluntarioPage() {
                   id="termos"
                   checked={termos}
                   onCheckedChange={(checked) => setTermos(checked as boolean)}
+                  className="border-[#1c4020]"
                 />
                 <label
                   htmlFor="termos"

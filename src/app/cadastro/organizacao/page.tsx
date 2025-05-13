@@ -78,9 +78,7 @@ export default function CadastroOrganizacaoPage() {
 
     setIsLoading(true);
 
-    // Simulação de cadastro - substituir por integração real
     try {
-      // Aqui você implementaria a lógica real de cadastro
       await new Promise((resolve) => setTimeout(resolve, 1000));
       router.push("/cadastro/sucesso");
     } catch (err) {
@@ -92,7 +90,7 @@ export default function CadastroOrganizacaoPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f7f5] p-4">
+    <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <Link href="/" className="absolute top-8 left-8 flex items-center gap-2">
         <Heart className="h-6 w-6 text-[#25352a]" />
         <span className="text-xl font-bold text-[#25352a]">Elpys</span>
@@ -132,6 +130,7 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.nomeOrganizacao}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -143,6 +142,7 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.cnpj}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -153,7 +153,7 @@ export default function CadastroOrganizacaoPage() {
                     handleSelectChange("tipoOrganizacao", value)
                   }
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-[#1c4020] text-white focus:ring-2 focus:ring-[#25352a]">
                     <SelectValue placeholder="Selecione o tipo" />
                   </SelectTrigger>
                   <SelectContent>
@@ -176,6 +176,7 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -188,6 +189,7 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.senha}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -200,6 +202,7 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.confirmarSenha}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -211,6 +214,7 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.telefone}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -221,6 +225,7 @@ export default function CadastroOrganizacaoPage() {
                   name="site"
                   value={formData.site}
                   onChange={handleChange}
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -232,6 +237,7 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.endereco}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -243,6 +249,7 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.cidade}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-white focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -251,37 +258,37 @@ export default function CadastroOrganizacaoPage() {
                 <Select
                   onValueChange={(value) => handleSelectChange("estado", value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className="border-[#1c4020] text-white focus:ring-2 focus:ring-[#25352a]">
                     <SelectValue placeholder="Selecione o estado" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="AC">Acre</SelectItem>
-                    <SelectItem value="AL">Alagoas</SelectItem>
-                    <SelectItem value="AP">Amapá</SelectItem>
-                    <SelectItem value="AM">Amazonas</SelectItem>
-                    <SelectItem value="BA">Bahia</SelectItem>
-                    <SelectItem value="CE">Ceará</SelectItem>
-                    <SelectItem value="DF">Distrito Federal</SelectItem>
-                    <SelectItem value="ES">Espírito Santo</SelectItem>
-                    <SelectItem value="GO">Goiás</SelectItem>
-                    <SelectItem value="MA">Maranhão</SelectItem>
-                    <SelectItem value="MT">Mato Grosso</SelectItem>
-                    <SelectItem value="MS">Mato Grosso do Sul</SelectItem>
-                    <SelectItem value="MG">Minas Gerais</SelectItem>
-                    <SelectItem value="PA">Pará</SelectItem>
-                    <SelectItem value="PB">Paraíba</SelectItem>
-                    <SelectItem value="PR">Paraná</SelectItem>
-                    <SelectItem value="PE">Pernambuco</SelectItem>
-                    <SelectItem value="PI">Piauí</SelectItem>
-                    <SelectItem value="RJ">Rio de Janeiro</SelectItem>
-                    <SelectItem value="RN">Rio Grande do Norte</SelectItem>
-                    <SelectItem value="RS">Rio Grande do Sul</SelectItem>
-                    <SelectItem value="RO">Rondônia</SelectItem>
-                    <SelectItem value="RR">Roraima</SelectItem>
-                    <SelectItem value="SC">Santa Catarina</SelectItem>
-                    <SelectItem value="SP">São Paulo</SelectItem>
-                    <SelectItem value="SE">Sergipe</SelectItem>
-                    <SelectItem value="TO">Tocantins</SelectItem>
+                    <SelectItem value="AC">Acre (AC)</SelectItem>
+                    <SelectItem value="AL">Alagoas (AL)</SelectItem>
+                    <SelectItem value="AP">Amapá (AP)</SelectItem>
+                    <SelectItem value="AM">Amazonas (AM)</SelectItem>
+                    <SelectItem value="BA">Bahia (BA)</SelectItem>
+                    <SelectItem value="CE">Ceará (CE)</SelectItem>
+                    <SelectItem value="DF">Distrito Federal (DF)</SelectItem>
+                    <SelectItem value="ES">Espírito Santo (ES)</SelectItem>
+                    <SelectItem value="GO">Goiás (GO)</SelectItem>
+                    <SelectItem value="MA">Maranhão (MA)</SelectItem>
+                    <SelectItem value="MT">Mato Grosso (MT)</SelectItem>
+                    <SelectItem value="MS">Mato Grosso do Sul (MS)</SelectItem>
+                    <SelectItem value="MG">Minas Gerais (MG)</SelectItem>
+                    <SelectItem value="PA">Pará (PA)</SelectItem>
+                    <SelectItem value="PB">Paraíba (PB)</SelectItem>
+                    <SelectItem value="PR">Paraná (PR)</SelectItem>
+                    <SelectItem value="PE">Pernambuco (PE)</SelectItem>
+                    <SelectItem value="PI">Piauí (PI)</SelectItem>
+                    <SelectItem value="RJ">Rio de Janeiro (RJ)</SelectItem>
+                    <SelectItem value="RN">Rio Grande do Norte (RN)</SelectItem>
+                    <SelectItem value="RS">Rio Grande do Sul (RS)</SelectItem>
+                    <SelectItem value="RO">Rondônia (RO)</SelectItem>
+                    <SelectItem value="RR">Roraima (RR)</SelectItem>
+                    <SelectItem value="SC">Santa Catarina (SC)</SelectItem>
+                    <SelectItem value="SP">São Paulo (SP)</SelectItem>
+                    <SelectItem value="SE">Sergipe (SE)</SelectItem>
+                    <SelectItem value="TO">Tocantins (TO)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -294,6 +301,7 @@ export default function CadastroOrganizacaoPage() {
                   value={formData.cep}
                   onChange={handleChange}
                   required
+                  className="border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                 />
               </div>
 
@@ -305,7 +313,7 @@ export default function CadastroOrganizacaoPage() {
                   placeholder="Descreva a missão, valores e áreas de atuação da sua organização"
                   value={formData.descricao}
                   onChange={handleChange}
-                  className="min-h-[100px]"
+                  className="min-h-[100px] border-[#1c4020] text-white placeholder-gray-500 focus:border-black focus:ring-2 focus:ring-[#25352a]"
                   required
                 />
               </div>
@@ -315,6 +323,7 @@ export default function CadastroOrganizacaoPage() {
                   id="termos"
                   checked={termos}
                   onCheckedChange={(checked) => setTermos(checked as boolean)}
+                  className="border-[#1c4020] text-white focus:ring-2 focus:ring-[#25352a]"
                 />
                 <label
                   htmlFor="termos"
