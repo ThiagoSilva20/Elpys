@@ -4,7 +4,7 @@ import type React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Heart, ArrowLeft } from "lucide-react";
+import { ArrowLeft, HeartHandshakeIcon } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
@@ -77,22 +77,23 @@ export default function LoginOrganizacaoPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#f5f7f5] p-4">
-      <Link href="/" className="absolute top-8 left-8 flex items-center gap-2">
-        <Heart className="h-6 w-6 text-[#25352a]" />
-        <span className="text-xl font-bold text-[#25352a]">Elpys</span>
+    <div className="bg-background flex min-h-screen flex-col items-center justify-center p-4">
+      <Link href="/" className="flex items-center gap-2">
+        <div className="from-primary to-secondary flex size-10 items-center justify-center rounded-lg bg-gradient-to-b p-2">
+          <HeartHandshakeIcon className="size-6 text-white" />
+        </div>
+        <span className="text-xl font-bold">Elpys</span>
       </Link>
 
-      <Card className="w-full max-w-md">
+      <Card className="bg-background border-primary/50 mt-4 w-full max-w-md">
         <CardHeader className="space-y-1">
-          <div className="mb-2 flex items-center">
-            <Link
-              href="/login"
-              className="mr-2 text-[#25352a] hover:text-[#1a261e]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Link>
-            <CardTitle className="text-2xl font-bold text-[#25352a]">
+          <div className="mb-2 flex items-center space-x-4">
+            <Button asChild variant="secondary" className="rounded-full">
+              <Link href="/login" className="flex items-center justify-center">
+                <ArrowLeft className="h-5 w-5 text-white" />
+              </Link>
+            </Button>
+            <CardTitle className="text-2xl font-bold">
               Login de Organização
             </CardTitle>
           </div>
@@ -123,7 +124,7 @@ export default function LoginOrganizacaoPage() {
                 <Label htmlFor="password">Senha</Label>
                 <Link
                   href="/recuperar-senha"
-                  className="text-sm text-[#25352a] hover:underline"
+                  className="text-secondary text-sm hover:underline"
                 >
                   Esqueceu a senha?
                 </Link>
@@ -138,7 +139,7 @@ export default function LoginOrganizacaoPage() {
             </div>
             <Button
               type="submit"
-              className="w-full bg-[#25352a] hover:bg-[#1a261e]"
+              className="h-[em] w-full"
               disabled={isLoading}
             >
               {isLoading ? "Entrando..." : "Entrar"}
@@ -150,7 +151,7 @@ export default function LoginOrganizacaoPage() {
             Não tem uma conta?{" "}
             <Link
               href="/cadastro/organizacao"
-              className="text-[#25352a] hover:underline"
+              className="text-secondary hover:underline"
             >
               Cadastre sua organização
             </Link>

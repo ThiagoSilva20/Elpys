@@ -5,7 +5,7 @@ import type React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Heart, ArrowLeft } from "lucide-react";
+import { ArrowLeft, HeartHandshakeIcon } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
@@ -27,6 +27,8 @@ import {
   SelectValue,
 } from "@/app/_components/ui/select";
 import { Checkbox } from "@/app/_components/ui/checkbox";
+import { GridPattern } from "@/app/_components/magicui/grid-pattern";
+import { cn } from "@/app/_lib/utils";
 
 export default function CadastroVoluntarioPage() {
   const router = useRouter();
@@ -115,236 +117,248 @@ export default function CadastroVoluntarioPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-4">
-      <Link href="/" className="absolute top-8 left-8 flex items-center gap-2">
-        <Heart className="h-6 w-6 text-[#25352a]" />
-        <span className="text-xl font-bold text-[#25352a]">Elpys</span>
-      </Link>
-
-      <Card className="w-full max-w-2xl">
-        <CardHeader className="space-y-1">
-          <div className="mb-2 flex items-center">
-            <Link
-              href="/cadastro"
-              className="mr-2 text-[#25352a] hover:text-[#1a261e]"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Link>
-            <CardTitle className="text-2xl font-bold text-[#25352a]">
-              Cadastro de Voluntário
-            </CardTitle>
+    <div className="flex min-h-screen">
+      <div className="border-primary/50 relative w-1/2 p-6">
+        <GridPattern
+          width={20}
+          height={20}
+          x={-1}
+          y={-1}
+          className={cn(
+            "[mask-image:linear-gradient(to_bottom_right,white,transparent,transparent)]",
+          )}
+        />
+        <Link href="/" className="flex items-center gap-2">
+          <div className="from-primary to-secondary flex size-10 items-center justify-center rounded-lg bg-gradient-to-b p-2">
+            <HeartHandshakeIcon className="size-6 text-white" />
           </div>
-          <CardDescription>
-            Preencha seus dados para se cadastrar como voluntário
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
+          <span className="text-xl font-bold">Elpys</span>
+        </Link>
+      </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Nome completo</Label>
-                <Input
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  required
-                  className="border-[#1c4020]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="border-[#1c4020]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">Senha</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="border-[#1c4020]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="confirmarSenha">Confirmar senha</Label>
-                <Input
-                  id="confirmarSenha"
-                  name="confirmarSenha"
-                  type="password"
-                  value={formData.confirmarSenha}
-                  onChange={handleChange}
-                  required
-                  className="border-[#1c4020]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="phone">Telefone</Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                  className="border-[#1c4020]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="city">Cidade</Label>
-                <Input
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  required
-                  className="border-[#1c4020]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="state">Estado</Label>
-                <Select
-                  onValueChange={(value) => handleSelectChange("state", value)}
+      <div className="bg-background flex h-full w-1/2 flex-col items-center p-6">
+        <Card className="bg-background w-full">
+          <CardHeader className="space-y-1">
+            <div className="mb-2 flex items-center space-x-4">
+              <Button asChild variant="secondary" className="rounded-full">
+                <Link
+                  href="/cadastro"
+                  className="flex items-center justify-center"
                 >
-                  <SelectTrigger className="border-[#1c4020]">
-                    <SelectValue placeholder="Selecione seu estado" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="AC">Acre</SelectItem>
-                    <SelectItem value="AL">Alagoas</SelectItem>
-                    <SelectItem value="AP">Amapá</SelectItem>
-                    <SelectItem value="AM">Amazonas</SelectItem>
-                    <SelectItem value="BA">Bahia</SelectItem>
-                    <SelectItem value="CE">Ceará</SelectItem>
-                    <SelectItem value="DF">Distrito Federal</SelectItem>
-                    <SelectItem value="ES">Espírito Santo</SelectItem>
-                    <SelectItem value="GO">Goiás</SelectItem>
-                    <SelectItem value="MA">Maranhão</SelectItem>
-                    <SelectItem value="MT">Mato Grosso</SelectItem>
-                    <SelectItem value="MS">Mato Grosso do Sul</SelectItem>
-                    <SelectItem value="MG">Minas Gerais</SelectItem>
-                    <SelectItem value="PA">Pará</SelectItem>
-                    <SelectItem value="PB">Paraíba</SelectItem>
-                    <SelectItem value="PR">Paraná</SelectItem>
-                    <SelectItem value="PE">Pernambuco</SelectItem>
-                    <SelectItem value="PI">Piauí</SelectItem>
-                    <SelectItem value="RJ">Rio de Janeiro</SelectItem>
-                    <SelectItem value="RN">Rio Grande do Norte</SelectItem>
-                    <SelectItem value="RS">Rio Grande do Sul</SelectItem>
-                    <SelectItem value="RO">Rondônia</SelectItem>
-                    <SelectItem value="RR">Roraima</SelectItem>
-                    <SelectItem value="SC">Santa Catarina</SelectItem>
-                    <SelectItem value="SP">São Paulo</SelectItem>
-                    <SelectItem value="SE">Sergipe</SelectItem>
-                    <SelectItem value="TO">Tocantins</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="availability">Disponibilidade</Label>
-                <Select
-                  onValueChange={(value) =>
-                    handleSelectChange("availability", value)
-                  }
-                >
-                  <SelectTrigger className="border-[#1c4020]">
-                    <SelectValue placeholder="Selecione sua disponibilidade" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="dias-uteis">Dias úteis</SelectItem>
-                    <SelectItem value="finais-semana">
-                      Finais de semana
-                    </SelectItem>
-                    <SelectItem value="noites">Noites</SelectItem>
-                    <SelectItem value="flexivel">Flexível</SelectItem>
-                    <SelectItem value="remoto">Apenas remoto</SelectItem>
-                    <SelectItem value="todos">Todos</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2 md:col-span-2">
-                <Label htmlFor="interests">Áreas de interesse</Label>
-                <Textarea
-                  id="interests"
-                  name="interests"
-                  placeholder="Descreva suas áreas de interesse para voluntariado (educação, meio ambiente, saúde, etc.)"
-                  value={formData.interests}
-                  onChange={handleChange}
-                  className="min-h-[100px] border-[#1c4020]"
-                  required
-                />
-              </div>
-
-              <div className="flex items-center space-x-2 md:col-span-2">
-                <Checkbox
-                  id="termos"
-                  checked={termos}
-                  onCheckedChange={(checked) => setTermos(checked as boolean)}
-                  className="border-[#1c4020]"
-                />
-                <label
-                  htmlFor="termos"
-                  className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Concordo com os{" "}
-                  <Link
-                    href="/termos"
-                    className="text-[#25352a] hover:underline"
-                  >
-                    termos de uso
-                  </Link>{" "}
-                  e{" "}
-                  <Link
-                    href="/privacidade"
-                    className="text-[#25352a] hover:underline"
-                  >
-                    política de privacidade
-                  </Link>
-                </label>
-              </div>
+                  <ArrowLeft className="h-5 w-5 text-white" />
+                </Link>
+              </Button>
+              <CardTitle className="text-2xl font-bold">
+                Cadastro de Voluntário
+              </CardTitle>
             </div>
+            <CardDescription>
+              Preencha seus dados para se cadastrar como voluntário
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <Alert variant="destructive">
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
 
-            <Button
-              type="submit"
-              className="w-full bg-[#25352a] hover:bg-[#1a261e]"
-              disabled={isLoading}
-            >
-              {isLoading ? "Cadastrando..." : "Concluir cadastro"}
-            </Button>
-          </form>
-        </CardContent>
-        <CardFooter className="flex justify-center">
-          <div className="text-center text-sm">
-            Já tem uma conta?{" "}
-            <Link href="/login" className="text-[#25352a] hover:underline">
-              Faça login
-            </Link>
-          </div>
-        </CardFooter>
-      </Card>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Nome completo</Label>
+                  <Input
+                    id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="password">Senha</Label>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="confirmarSenha">Confirmar senha</Label>
+                  <Input
+                    id="confirmarSenha"
+                    name="confirmarSenha"
+                    type="password"
+                    value={formData.confirmarSenha}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Telefone</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="city">Cidade</Label>
+                  <Input
+                    id="city"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="state">Estado</Label>
+                  <Select
+                    onValueChange={(value) =>
+                      handleSelectChange("state", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione seu estado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="AC">Acre</SelectItem>
+                      <SelectItem value="AL">Alagoas</SelectItem>
+                      <SelectItem value="AP">Amapá</SelectItem>
+                      <SelectItem value="AM">Amazonas</SelectItem>
+                      <SelectItem value="BA">Bahia</SelectItem>
+                      <SelectItem value="CE">Ceará</SelectItem>
+                      <SelectItem value="DF">Distrito Federal</SelectItem>
+                      <SelectItem value="ES">Espírito Santo</SelectItem>
+                      <SelectItem value="GO">Goiás</SelectItem>
+                      <SelectItem value="MA">Maranhão</SelectItem>
+                      <SelectItem value="MT">Mato Grosso</SelectItem>
+                      <SelectItem value="MS">Mato Grosso do Sul</SelectItem>
+                      <SelectItem value="MG">Minas Gerais</SelectItem>
+                      <SelectItem value="PA">Pará</SelectItem>
+                      <SelectItem value="PB">Paraíba</SelectItem>
+                      <SelectItem value="PR">Paraná</SelectItem>
+                      <SelectItem value="PE">Pernambuco</SelectItem>
+                      <SelectItem value="PI">Piauí</SelectItem>
+                      <SelectItem value="RJ">Rio de Janeiro</SelectItem>
+                      <SelectItem value="RN">Rio Grande do Norte</SelectItem>
+                      <SelectItem value="RS">Rio Grande do Sul</SelectItem>
+                      <SelectItem value="RO">Rondônia</SelectItem>
+                      <SelectItem value="RR">Roraima</SelectItem>
+                      <SelectItem value="SC">Santa Catarina</SelectItem>
+                      <SelectItem value="SP">São Paulo</SelectItem>
+                      <SelectItem value="SE">Sergipe</SelectItem>
+                      <SelectItem value="TO">Tocantins</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="availability">Disponibilidade</Label>
+                  <Select
+                    onValueChange={(value) =>
+                      handleSelectChange("availability", value)
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Selecione sua disponibilidade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="dias-uteis">Dias úteis</SelectItem>
+                      <SelectItem value="finais-semana">
+                        Finais de semana
+                      </SelectItem>
+                      <SelectItem value="noites">Noites</SelectItem>
+                      <SelectItem value="flexivel">Flexível</SelectItem>
+                      <SelectItem value="remoto">Apenas remoto</SelectItem>
+                      <SelectItem value="todos">Todos</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="interests">Áreas de interesse</Label>
+                  <Textarea
+                    id="interests"
+                    name="interests"
+                    placeholder="Descreva suas áreas de interesse para voluntariado (educação, meio ambiente, saúde, etc.)"
+                    value={formData.interests}
+                    onChange={handleChange}
+                    className="min-h-[100px]"
+                    required
+                  />
+                </div>
+
+                <div className="flex items-center space-x-2 md:col-span-2">
+                  <Checkbox
+                    id="termos"
+                    checked={termos}
+                    onCheckedChange={(checked) => setTermos(checked as boolean)}
+                  />
+                  <label
+                    htmlFor="termos"
+                    className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Concordo com os{" "}
+                    <Link
+                      href="/termos"
+                      className="text-secondary hover:underline"
+                    >
+                      termos de uso
+                    </Link>{" "}
+                    e{" "}
+                    <Link
+                      href="/privacidade"
+                      className="text-secondary hover:underline"
+                    >
+                      política de privacidade
+                    </Link>
+                  </label>
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                className="h-[3em] w-full"
+                disabled={isLoading}
+              >
+                {isLoading ? "Cadastrando..." : "Concluir cadastro"}
+              </Button>
+            </form>
+          </CardContent>
+          <CardFooter className="flex justify-center">
+            <div className="text-center text-sm">
+              Já tem uma conta?{" "}
+              <Link href="/login" className="text-secondary hover:underline">
+                Faça login
+              </Link>
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
     </div>
   );
 }
