@@ -1,144 +1,76 @@
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { userType, email, password, ...data } = body;
+    const { userType, ...data } = body;
 
-    if (userType !== "organization" && userType !== "volunteer") {
-      return NextResponse.json(
-        {
-          error:
-            'Tipo de usuário inválido. Deve ser "organization" ou "volunteer".',
-        },
-        { status: 400 },
-      );
-    }
+    let endpoint = "";
+    let payload = {};
 
-    // Validação dos dados (exemplo básico)
-    if (!email || !password) {
-      return NextResponse.json(
-        { error: "Email e senha são obrigatórios." },
-        { status: 400 },
-      );
-    }
+    if (userType === "volunteer") {
+      // Para voluntários, usamos o endpoint de pessoas
+      endpoint = "/persons/";
 
-    // Verificar se o email já está em uso
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
+      // Mapear os dados do frontend para o formato do backend
+      payload = {
+        username: data.email, // Usar email como username
+        email: data.email,
+        password: data.password,
+        cpf: data.cpf || "00000000000", // CPF obrigatório no backend
+        full_name: data.fullName,
+        birth_date: data.birthDate || null,
+      };
+    } else if (userType === "organization") {
+      // Para organizações, usamos o endpoint de empresas
+      endpoint = "/companies/";
 
-    if (existingUser) {
-      return NextResponse.json(
-        { error: "Este email já está em uso." },
-        { status: 400 },
-      );
-    }
-
-    // Hash da senha
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Criar um novo usuário
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        userType,
-      },
-    });
-
-    let result;
-    if (userType === "organization") {
-      // Validação específica da organização
-      if (!data.name || !data.cnpj) {
-        // Excluir o usuário criado para evitar usuários órfãos
-        await prisma.user.delete({ where: { id: newUser.id } });
-
-        return NextResponse.json(
-          { error: "Nome e CNPJ são obrigatórios para organizações." },
-          { status: 400 },
-        );
-      }
-
-      try {
-        result = await prisma.organization.create({
-          data: {
-            name: data.name,
-            cnpj: data.cnpj,
-            orgType: data.orgType || "outro",
-            phone: data.phone || "",
-            website: data.website || "",
-            address: data.address || "",
-            city: data.city || "",
-            state: data.state || "",
-            zipCode: data.zipCode || "",
-            description: data.description || "",
-            userId: newUser.id,
-          },
-        });
-      } catch (orgError) {
-        // Se falhar ao criar a organização, exclua o usuário para evitar inconsistências
-        await prisma.user.delete({ where: { id: newUser.id } });
-        throw orgError;
-      }
-    } else if (userType === "volunteer") {
-      // Validação específica do voluntário
-      if (!data.fullName) {
-        // Excluir o usuário criado para evitar usuários órfãos
-        await prisma.user.delete({ where: { id: newUser.id } });
-
-        return NextResponse.json(
-          { error: "Nome completo é obrigatório para voluntários." },
-          { status: 400 },
-        );
-      }
-
-      try {
-        result = await prisma.volunteer.create({
-          data: {
-            fullName: data.fullName,
-            phone: data.phone || "",
-            city: data.city || "",
-            state: data.state || "",
-            availability: data.availability || "",
-            interests: data.interests || "",
-            userId: newUser.id,
-          },
-        });
-      } catch (volError) {
-        // Se falhar ao criar o voluntário, exclua o usuário para evitar inconsistências
-        await prisma.user.delete({ where: { id: newUser.id } });
-        throw volError;
-      }
-    }
-
-    return NextResponse.json(
-      {
-        message: "Cadastro realizado com sucesso!",
-        user: {
-          id: newUser.id,
-          email: newUser.email,
-          userType: newUser.userType,
-          ...result,
-        },
-      },
-      { status: 201 },
-    );
-  } catch (error) {
-    console.error("Erro ao criar:", error);
-
-    // Enviar mensagem de erro mais específica, se possível
-    if (error instanceof Error) {
-      return NextResponse.json(
-        { error: "Falha ao criar", message: error.message },
-        { status: 500 },
-      );
+      payload = {
+        username: data.email,
+        email: data.email,
+        password: data.password,
+        cnpj: data.cnpj,
+        company_name: data.companyName,
+        trade_name: "",
+        state_registration: "",
+      };
     } else {
-      return NextResponse.json({ error: "Falha ao criar" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Tipo de usuário inválido" },
+        { status: 400 },
+      );
     }
+
+    // Fazer a requisição para o backend Django
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: responseData.error || "Erro no cadastro" },
+        { status: response.status },
+      );
+    }
+
+    return NextResponse.json({
+      message: "Cadastro realizado com sucesso!",
+      user: responseData,
+    });
+  } catch (error) {
+    console.error("Erro no registro:", error);
+    return NextResponse.json(
+      { error: "Erro interno do servidor" },
+      { status: 500 },
+    );
   }
 }

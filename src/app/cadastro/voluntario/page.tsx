@@ -9,7 +9,6 @@ import { ArrowLeft, HeartHandshakeIcon } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
-import { Textarea } from "@/app/_components/ui/textarea";
 import {
   Card,
   CardContent,
@@ -19,13 +18,7 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 import { Alert, AlertDescription } from "@/app/_components/ui/alert";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/_components/ui/select";
+
 import { Checkbox } from "@/app/_components/ui/checkbox";
 import { GridPattern } from "@/app/_components/magicui/grid-pattern";
 import { cn } from "@/app/_lib/utils";
@@ -37,11 +30,8 @@ export default function CadastroVoluntarioPage() {
     email: "",
     password: "",
     confirmarSenha: "",
-    phone: "",
-    city: "",
-    state: "",
-    interests: "",
-    availability: "",
+    cpf: "",
+    birthDate: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -51,10 +41,6 @@ export default function CadastroVoluntarioPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -88,11 +74,8 @@ export default function CadastroVoluntarioPage() {
           email: formData.email,
           password: formData.password,
           fullName: formData.fullName,
-          phone: formData.phone,
-          city: formData.city,
-          state: formData.state,
-          interests: formData.interests,
-          availability: formData.availability,
+          cpf: formData.cpf,
+          birthDate: formData.birthDate,
         }),
       });
 
@@ -189,6 +172,18 @@ export default function CadastroVoluntarioPage() {
                 </div>
 
                 <div className="space-y-2">
+                  <Label htmlFor="cpf">CPF</Label>
+                  <Input
+                    id="cpf"
+                    name="cpf"
+                    value={formData.cpf}
+                    onChange={handleChange}
+                    placeholder="000.000.000-00"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
                   <Label htmlFor="password">Senha</Label>
                   <Input
                     id="password"
@@ -213,101 +208,13 @@ export default function CadastroVoluntarioPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Telefone</Label>
+                  <Label htmlFor="birthDate">Data de Nascimento</Label>
                   <Input
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
+                    id="birthDate"
+                    name="birthDate"
+                    type="date"
+                    value={formData.birthDate}
                     onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="city">Cidade</Label>
-                  <Input
-                    id="city"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="state">Estado</Label>
-                  <Select
-                    onValueChange={(value) =>
-                      handleSelectChange("state", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione seu estado" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="AC">Acre</SelectItem>
-                      <SelectItem value="AL">Alagoas</SelectItem>
-                      <SelectItem value="AP">Amapá</SelectItem>
-                      <SelectItem value="AM">Amazonas</SelectItem>
-                      <SelectItem value="BA">Bahia</SelectItem>
-                      <SelectItem value="CE">Ceará</SelectItem>
-                      <SelectItem value="DF">Distrito Federal</SelectItem>
-                      <SelectItem value="ES">Espírito Santo</SelectItem>
-                      <SelectItem value="GO">Goiás</SelectItem>
-                      <SelectItem value="MA">Maranhão</SelectItem>
-                      <SelectItem value="MT">Mato Grosso</SelectItem>
-                      <SelectItem value="MS">Mato Grosso do Sul</SelectItem>
-                      <SelectItem value="MG">Minas Gerais</SelectItem>
-                      <SelectItem value="PA">Pará</SelectItem>
-                      <SelectItem value="PB">Paraíba</SelectItem>
-                      <SelectItem value="PR">Paraná</SelectItem>
-                      <SelectItem value="PE">Pernambuco</SelectItem>
-                      <SelectItem value="PI">Piauí</SelectItem>
-                      <SelectItem value="RJ">Rio de Janeiro</SelectItem>
-                      <SelectItem value="RN">Rio Grande do Norte</SelectItem>
-                      <SelectItem value="RS">Rio Grande do Sul</SelectItem>
-                      <SelectItem value="RO">Rondônia</SelectItem>
-                      <SelectItem value="RR">Roraima</SelectItem>
-                      <SelectItem value="SC">Santa Catarina</SelectItem>
-                      <SelectItem value="SP">São Paulo</SelectItem>
-                      <SelectItem value="SE">Sergipe</SelectItem>
-                      <SelectItem value="TO">Tocantins</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="availability">Disponibilidade</Label>
-                  <Select
-                    onValueChange={(value) =>
-                      handleSelectChange("availability", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione sua disponibilidade" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="dias-uteis">Dias úteis</SelectItem>
-                      <SelectItem value="finais-semana">
-                        Finais de semana
-                      </SelectItem>
-                      <SelectItem value="noites">Noites</SelectItem>
-                      <SelectItem value="flexivel">Flexível</SelectItem>
-                      <SelectItem value="remoto">Apenas remoto</SelectItem>
-                      <SelectItem value="todos">Todos</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="interests">Áreas de interesse</Label>
-                  <Textarea
-                    id="interests"
-                    name="interests"
-                    placeholder="Descreva suas áreas de interesse para voluntariado (educação, meio ambiente, saúde, etc.)"
-                    value={formData.interests}
-                    onChange={handleChange}
-                    className="min-h-[100px]"
                     required
                   />
                 </div>

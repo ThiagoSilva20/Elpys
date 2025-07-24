@@ -1,42 +1,152 @@
-# DevVoluntário
+# 🚀 Elpys Frontend
 
-Uma plataforma colaborativa para conectar desenvolvedores iniciantes que buscam experiência com projetos voluntários publicados por anunciantes.
+Frontend Next.js para o sistema de vagas voluntárias de programação Elpys.
 
-## 💡 Sobre a Ideia
+## 📋 Sobre
 
-O DevVoluntário nasce com o propósito de ajudar quem está começando na carreira de desenvolvimento a adquirir experiência prática. Ao mesmo tempo, oferece uma solução para projetos sociais, iniciativas pessoais e startups que precisam de apoio técnico, mas não têm orçamento.
+Este é o frontend do projeto Elpys, desenvolvido em Next.js 15 com TypeScript. O sistema se conecta com o backend Django para gerenciar vagas voluntárias de programação.
 
-### Como vai funcionar:
+## 🏗️ Arquitetura
 
-- 📝 Anunciantes publicam vagas/projetos de colaboração voluntária.
-- 💻 Desenvolvedores se candidatam para ganhar experiência prática.
-- 🤝 A plataforma conecta ambos, incentivando o crescimento da comunidade tech.
+```
+Frontend (Next.js) ←→ Backend (Django REST API)
+     Porta 3000           Porta 8000
+```
 
-## 🚧 Status do Projeto
+## 🚀 Configuração Rápida
 
-Este projeto está em fase inicial de planejamento. Nenhuma funcionalidade foi desenvolvida até o momento.
+### **Pré-requisitos**
+- Node.js 18+
+- npm ou yarn
+- Backend Django rodando
 
-Este repositório servirá como um diário de desenvolvimento e documentação de toda a jornada.
+### **1. Instalar dependências**
+```bash
+npm install
+```
 
-## 🛠 Tecnologias Planejadas
+### **2. Configurar variáveis de ambiente**
+O arquivo `.env.local` já está configurado com:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+```
 
-- Framework: [Next.js](https://nextjs.org/)
-- Linguagem: TypeScript
-- Estilização: Tailwind CSS
+### **3. Iniciar servidor de desenvolvimento**
+```bash
+npm run dev
+```
 
-Outras ferramentas poderão ser adicionadas ao longo do processo de desenvolvimento.
+### **4. Acessar aplicação**
+- **URL**: http://localhost:3000
+- **API**: http://localhost:8000/api
 
-## 📚 Objetivos do Repositório
+## 📁 Estrutura do Projeto
 
-Este repositório servirá para:
+```
+src/app/
+├── _components/          # Componentes reutilizáveis
+├── _lib/                 # Utilitários e configurações
+│   ├── api.ts           # Cliente HTTP para Django
+│   ├── services/        # Serviços de API
+│   │   ├── auth.ts      # Autenticação
+│   │   ├── jobs.ts      # Vagas
+│   │   └── applications.ts # Candidaturas
+│   └── hooks/           # Hooks React
+├── login/               # Páginas de login
+├── cadastro/            # Páginas de cadastro
+├── dashboard/           # Dashboard do usuário
+└── ...
+```
 
-- Documentar cada passo do desenvolvimento;
-- Registrar decisões técnicas e de design;
-- Compartilhar aprendizados;
-- Criar um espaço colaborativo para ideias e melhorias;
-- Atrair contribuições da comunidade.
+## 🔧 Tecnologias Utilizadas
+
+- **Next.js 15** - Framework React
+- **TypeScript** - Tipagem estática
+- **Tailwind CSS** - Estilização
+- **Radix UI** - Componentes acessíveis
+- **React Hook Form** - Formulários
+- **Zod** - Validação de dados
+
+## 🔐 Autenticação
+
+O sistema usa autenticação baseada em sessões Django:
+
+### **Login de Voluntário**
+- Endpoint: `POST /api/auth/login/`
+- Validação: `is_person = true`
+
+### **Login de Organização**
+- Endpoint: `POST /api/auth/login/`
+- Validação: `is_company = true`
+
+### **Sessões**
+- Cookies gerenciados automaticamente
+- Sessões persistentes no Django
+
+## 📊 Funcionalidades
+
+### **Para Voluntários:**
+- ✅ Login e cadastro
+- ✅ Busca de vagas
+- ✅ Candidatura para vagas
+- ✅ Acompanhamento de candidaturas
+
+### **Para Organizações:**
+- ✅ Login e cadastro
+- ✅ Publicação de vagas
+- ✅ Gerenciamento de candidaturas
+- ✅ Métricas de visualização
+
+## 🧪 Testando
+
+### **1. Verificar backend**
+```bash
+curl http://localhost:8000/api/categories/
+```
+
+### **2. Testar login**
+- Acesse: http://localhost:3000/login
+- Use credenciais de teste do backend
+
+### **3. Dados de exemplo**
+Execute no backend:
+```bash
+python populate_sample_data.py
+```
+
+## 🐛 Debugging
+
+### **Problemas comuns:**
+
+#### **CORS Error:**
+- Verificar se backend está rodando
+- Verificar configuração CORS no Django
+
+#### **404 Not Found:**
+- Verificar se `NEXT_PUBLIC_API_URL` está correto
+- Verificar se endpoint existe no Django
+
+#### **401 Unauthorized:**
+- Verificar credenciais
+- Verificar se usuário está logado
+
+## 📈 Próximos Passos
+
+1. **Implementar autenticação persistente**
+2. **Adicionar loading states**
+3. **Implementar cache de dados**
+4. **Adicionar notificações**
+5. **Implementar paginação**
+6. **Adicionar busca avançada**
+
+## 📞 Suporte
+
+Para dúvidas:
+1. Verificar este README
+2. Verificar `FRONTEND_INTEGRATION.md` no backend
+3. Verificar console do navegador
+4. Verificar Network tab do DevTools
 
 ---
 
-📌 Fique à vontade para acompanhar o progresso ou sugerir ideias.
-Toda colaboração será bem-vinda! 🚀
+**🎉 Frontend configurado e pronto para uso!**

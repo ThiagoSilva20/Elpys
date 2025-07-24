@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 import { Alert, AlertDescription } from "@/app/_components/ui/alert";
+import { AuthService } from "@/app/_lib/services/auth";
 
 export default function LoginVoluntarioPage() {
   const router = useRouter();
@@ -37,32 +38,16 @@ export default function LoginVoluntarioPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          userType: "volunteer",
-        }),
-      });
+      const response = await AuthService.login({ email, password });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Falha ao fazer login");
-      }
-
-      // Verificar se é realmente um voluntário
-      if (data.user.userType !== "volunteer") {
+      // Verificar se é realmente um voluntário (pessoa)
+      if (!response.user.is_person) {
         throw new Error(
           "Este email não pertence a um voluntário. Use o login de organização.",
         );
       }
 
-      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("user", JSON.stringify(response.user));
       router.push("/dashboard");
     } catch (err) {
       setError(

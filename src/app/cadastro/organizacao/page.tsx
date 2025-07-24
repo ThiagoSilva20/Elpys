@@ -9,7 +9,6 @@ import { ArrowLeft, HeartHandshakeIcon } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 import { Label } from "@/app/_components/ui/label";
-import { Textarea } from "@/app/_components/ui/textarea";
 import {
   Card,
   CardContent,
@@ -19,13 +18,7 @@ import {
   CardTitle,
 } from "@/app/_components/ui/card";
 import { Alert, AlertDescription } from "@/app/_components/ui/alert";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/_components/ui/select";
+
 import { Checkbox } from "@/app/_components/ui/checkbox";
 import { GridPattern } from "@/app/_components/magicui/grid-pattern";
 import { cn } from "@/app/_lib/utils";
@@ -38,14 +31,6 @@ export default function CadastroOrganizacaoPage() {
     email: "",
     password: "",
     confirmarSenha: "",
-    phone: "",
-    website: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    description: "",
-    orgType: "",
   });
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -55,10 +40,6 @@ export default function CadastroOrganizacaoPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -91,16 +72,8 @@ export default function CadastroOrganizacaoPage() {
           userType: "organization",
           email: formData.email,
           password: formData.password,
-          name: formData.name,
+          companyName: formData.name,
           cnpj: formData.cnpj,
-          orgType: formData.orgType,
-          phone: formData.phone,
-          website: formData.website,
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          zipCode: formData.zipCode,
-          description: formData.description,
         }),
       });
 
@@ -196,27 +169,6 @@ export default function CadastroOrganizacaoPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="orgType">Tipo de organização</Label>
-                  <Select
-                    onValueChange={(value) =>
-                      handleSelectChange("orgType", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o tipo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="ong">ONG</SelectItem>
-                      <SelectItem value="associacao">Associação</SelectItem>
-                      <SelectItem value="fundacao">Fundação</SelectItem>
-                      <SelectItem value="instituto">Instituto</SelectItem>
-                      <SelectItem value="cooperativa">Cooperativa</SelectItem>
-                      <SelectItem value="outro">Outro</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
                   <Label htmlFor="email">Email institucional</Label>
                   <Input
                     id="email"
@@ -248,119 +200,6 @@ export default function CadastroOrganizacaoPage() {
                     type="password"
                     value={formData.confirmarSenha}
                     onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Telefone</Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="website">Site (opcional)</Label>
-                  <Input
-                    id="website"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleChange}
-                  />
-                </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="address">Endereço</Label>
-                  <Input
-                    id="address"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="city">Cidade</Label>
-                  <Input
-                    id="city"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="state">Estado</Label>
-                  <Select
-                    onValueChange={(value) =>
-                      handleSelectChange("state", value)
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione o estado" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="AC">Acre (AC)</SelectItem>
-                      <SelectItem value="AL">Alagoas (AL)</SelectItem>
-                      <SelectItem value="AP">Amapá (AP)</SelectItem>
-                      <SelectItem value="AM">Amazonas (AM)</SelectItem>
-                      <SelectItem value="BA">Bahia (BA)</SelectItem>
-                      <SelectItem value="CE">Ceará (CE)</SelectItem>
-                      <SelectItem value="DF">Distrito Federal (DF)</SelectItem>
-                      <SelectItem value="ES">Espírito Santo (ES)</SelectItem>
-                      <SelectItem value="GO">Goiás (GO)</SelectItem>
-                      <SelectItem value="MA">Maranhão (MA)</SelectItem>
-                      <SelectItem value="MT">Mato Grosso (MT)</SelectItem>
-                      <SelectItem value="MS">
-                        Mato Grosso do Sul (MS)
-                      </SelectItem>
-                      <SelectItem value="MG">Minas Gerais (MG)</SelectItem>
-                      <SelectItem value="PA">Pará (PA)</SelectItem>
-                      <SelectItem value="PB">Paraíba (PB)</SelectItem>
-                      <SelectItem value="PR">Paraná (PR)</SelectItem>
-                      <SelectItem value="PE">Pernambuco (PE)</SelectItem>
-                      <SelectItem value="PI">Piauí (PI)</SelectItem>
-                      <SelectItem value="RJ">Rio de Janeiro (RJ)</SelectItem>
-                      <SelectItem value="RN">
-                        Rio Grande do Norte (RN)
-                      </SelectItem>
-                      <SelectItem value="RS">Rio Grande do Sul (RS)</SelectItem>
-                      <SelectItem value="RO">Rondônia (RO)</SelectItem>
-                      <SelectItem value="RR">Roraima (RR)</SelectItem>
-                      <SelectItem value="SC">Santa Catarina (SC)</SelectItem>
-                      <SelectItem value="SP">São Paulo (SP)</SelectItem>
-                      <SelectItem value="SE">Sergipe (SE)</SelectItem>
-                      <SelectItem value="TO">Tocantins (TO)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="zipCode">CEP</Label>
-                  <Input
-                    id="zipCode"
-                    name="zipCode"
-                    value={formData.zipCode}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2 md:col-span-2">
-                  <Label htmlFor="description">Descrição da organização</Label>
-                  <Textarea
-                    id="description"
-                    name="description"
-                    placeholder="Descreva a missão, valores e áreas de atuação da sua organização"
-                    value={formData.description}
-                    onChange={handleChange}
-                    className="min-h-[100px]"
                     required
                   />
                 </div>
