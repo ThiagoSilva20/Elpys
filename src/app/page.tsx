@@ -1,4 +1,4 @@
-import Header from "./_components/landingpage/header";
+import LandingHeader from "./_components/landingpage/header";
 import HeroSection from "./_components/landingpage/hero-section";
 import HowItsWorksSection from "./_components/landingpage/howitsworks-section";
 import BenefitsSection from "./_components/landingpage/benefits-section";
@@ -10,22 +10,13 @@ import FaqSection from "./_components/landingpage/faq-section";
 export default function LandingPage() {
   return (
     <div className="min-h-screen">
-      <Header />
+      <LandingHeader />
       <main className="flex-1">
-        {/* Hero Section */}
         <HeroSection />
-        {/* Como Funciona */}
         <HowItsWorksSection />
-
-        {/* Benefícios */}
         <BenefitsSection />
-
-        {/* Depoimentos */}
         <TestimonialsSection />
-
-        {/* FAQ */}
         <FaqSection />
-        {/* Cadastro */}
         <CtaAdvertiseSection />
       </main>
       <Footer />

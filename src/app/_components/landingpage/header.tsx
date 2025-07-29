@@ -33,12 +33,12 @@ const Header = () => {
         <div className="flex items-center gap-4">
           <ToggleTheme />
           <Button variant="outline" asChild>
-            <Link href="/" className="flex items-center">
+            <Link href="/login" className="flex items-center">
               Entrar <User className="size-4" />
             </Link>
           </Button>
           <Button>
-            <Link href="/" className="flex items-center">
+            <Link href="/cadastro" className="flex items-center">
               Cadastrar <LogInIcon className="ml-2 size-4" />
             </Link>
           </Button>

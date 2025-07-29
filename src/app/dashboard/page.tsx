@@ -2,15 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { Heart } from "lucide-react";
 import { Button } from "@/app/_components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/app/_components/ui/card";
+import DashboardHeader from "@/app/_components/dashboard/DashboardHeader";
+import DashboardCard from "@/app/_components/dashboard/DashboardCard";
+import LoadingSpinner from "@/app/_components/ui/LoadingSpinner";
+import PageContainer from "@/app/_components/layout/PageContainer";
 
 interface Organization {
   id: string;
@@ -40,11 +36,9 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Verificar se o usuário está logado
     const userData = localStorage.getItem("user");
 
     if (!userData) {
-      // Redirecionar para a página de login se não estiver logado
       router.push("/login");
       return;
     }
@@ -69,28 +63,81 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <p>Carregando...</p>
+        <LoadingSpinner size="lg" text="Carregando dashboard..." />
       </div>
     );
   }
 
+  const renderProfileCard = () => (
+    <DashboardCard title="Meu Perfil">
+      <p className="mb-2">
+        <strong>Email:</strong> {user?.email}
+      </p>
+      <p className="mb-2">
+        <strong>Tipo de conta:</strong>{" "}
+        {user?.userType === "organization" ? "Organização" : "Voluntário"}
+      </p>
+      {user?.userType === "organization" ? (
+        <>
+          <p className="mb-2">
+            <strong>CNPJ:</strong> {user?.organization?.cnpj}
+          </p>
+          <p className="mb-2">
+            <strong>Cidade:</strong> {user?.organization?.city}
+          </p>
+        </>
+      ) : (
+        <>
+          <p className="mb-2">
+            <strong>Cidade:</strong> {user?.volunteer?.city}
+          </p>
+          <p className="mb-2">
+            <strong>Disponibilidade:</strong> {user?.volunteer?.availability}
+          </p>
+        </>
+      )}
+      <Button className="mt-4 bg-[#25352a] hover:bg-[#1a261e]">
+        Editar Perfil
+      </Button>
+    </DashboardCard>
+  );
+
+  const renderOrganizationCards = () => (
+    <>
+      <DashboardCard
+        title="Minhas Vagas"
+        description="Gerencie suas vagas de voluntariado."
+        buttonText="Publicar Nova Vaga"
+        buttonHref="/publicar"
+      />
+      <DashboardCard
+        title="Candidaturas"
+        description="Veja quem se candidatou às suas vagas."
+        buttonText="Ver Candidaturas"
+      />
+    </>
+  );
+
+  const renderVolunteerCards = () => (
+    <>
+      <DashboardCard
+        title="Vagas Disponíveis"
+        description="Encontre oportunidades de voluntariado que combinam com seu perfil."
+        buttonText="Explorar Vagas"
+      />
+      <DashboardCard
+        title="Minhas Candidaturas"
+        description="Acompanhe o status das suas candidaturas."
+        buttonText="Ver Candidaturas"
+      />
+    </>
+  );
+
   return (
     <div className="min-h-screen bg-[#f5f7f5] p-4">
-      <header className="mb-8 flex items-center justify-between border-b border-gray-200 pb-4">
-        <Link href="/" className="flex items-center gap-2">
-          <Heart className="h-6 w-6 text-[#25352a]" />
-          <span className="text-xl font-bold text-[#25352a]">Elpys</span>
-        </Link>
-        <Button
-          variant="outline"
-          className="border-[#25352a] text-[#25352a]"
-          onClick={handleLogout}
-        >
-          Sair
-        </Button>
-      </header>
+      <DashboardHeader onLogout={handleLogout} />
 
-      <main className="container mx-auto max-w-6xl">
+      <PageContainer maxWidth="full">
         <h1 className="mb-6 text-3xl font-bold text-[#25352a]">
           Bem-vindo,{" "}
           {user?.userType === "organization"
@@ -100,110 +147,12 @@ export default function DashboardPage() {
         </h1>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-[#25352a]">Meu Perfil</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="mb-2">
-                <strong>Email:</strong> {user?.email}
-              </p>
-              <p className="mb-2">
-                <strong>Tipo de conta:</strong>{" "}
-                {user?.userType === "organization"
-                  ? "Organização"
-                  : "Voluntário"}
-              </p>
-              {user?.userType === "organization" ? (
-                <>
-                  <p className="mb-2">
-                    <strong>CNPJ:</strong> {user?.organization?.cnpj}
-                  </p>
-                  <p className="mb-2">
-                    <strong>Cidade:</strong> {user?.organization?.city}
-                  </p>
-                </>
-              ) : (
-                <>
-                  <p className="mb-2">
-                    <strong>Cidade:</strong> {user?.volunteer?.city}
-                  </p>
-                  <p className="mb-2">
-                    <strong>Disponibilidade:</strong>{" "}
-                    {user?.volunteer?.availability}
-                  </p>
-                </>
-              )}
-              <Button className="mt-4 bg-[#25352a] hover:bg-[#1a261e]">
-                Editar Perfil
-              </Button>
-            </CardContent>
-          </Card>
-
-          {user?.userType === "organization" ? (
-            <>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-[#25352a]">Minhas Vagas</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="mb-4">Gerencie suas vagas de voluntariado.</p>
-                  <Button className="bg-[#25352a] hover:bg-[#1a261e]">
-                    <Link href="/publicar">Publicar Nova Vaga</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-[#25352a]">Candidaturas</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="mb-4">Veja quem se candidatou às suas vagas.</p>
-                  <Button className="bg-[#25352a] hover:bg-[#1a261e]">
-                    Ver Candidaturas
-                  </Button>
-                </CardContent>
-              </Card>
-            </>
-          ) : (
-            <>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-[#25352a]">
-                    Vagas Disponíveis
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="mb-4">
-                    Encontre oportunidades de voluntariado que combinam com seu
-                    perfil.
-                  </p>
-                  <Button className="bg-[#25352a] hover:bg-[#1a261e]">
-                    Explorar Vagas
-                  </Button>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-[#25352a]">
-                    Minhas Candidaturas
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="mb-4">
-                    Acompanhe o status das suas candidaturas.
-                  </p>
-                  <Button className="bg-[#25352a] hover:bg-[#1a261e]">
-                    Ver Candidaturas
-                  </Button>
-                </CardContent>
-              </Card>
-            </>
-          )}
+          {renderProfileCard()}
+          {user?.userType === "organization"
+            ? renderOrganizationCards()
+            : renderVolunteerCards()}
         </div>
-      </main>
+      </PageContainer>
     </div>
   );
 }
